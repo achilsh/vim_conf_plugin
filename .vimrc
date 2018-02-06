@@ -523,8 +523,8 @@ nmap <silent> <F8> <Plug>StopMarkdownPreview
 imap <silent> <F8> <Plug>StopMarkdownPreview
 
 "高亮配对符
-let g:mta_use_matchparen_group = 1
-let g:mta_set_default_matchtag_color = 1
+"let g:mta_use_matchparen_group = 1
+"let g:mta_set_default_matchtag_color = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 新建文件设置
