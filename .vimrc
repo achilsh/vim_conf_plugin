@@ -3,7 +3,6 @@ func! GetPWD()
     return substitute(getcwd(), "", "", "g")
 endf
 
-
 "function! GoogleCppIndent()
 "    let l:cline_num = line('.')
 "    let l:orig_indent = cindent(l:cline_num)
@@ -46,13 +45,6 @@ endf
 
 " line
 " set cursorline
-
-" 缩进
-set autoindent
-set smartindent
-set smarttab
-filetype indent on
-
 set hls
 " filetype plugin on
 set shiftwidth=4
@@ -60,11 +52,9 @@ set tabstop=4
 set softtabstop=4
 set noswapfile
 set expandtab
-set nowrap
+set wrap
 set cindent
-set cinoptions=g0,:0,N-s,(0
-
-"set cinoptions=h1,l1,g1,t0,i2,+2,(2,w1,W2
+set cinoptions=h1,l1,g1,t0,i2,+2,(2,w1,W2
 "set indentexpr=GoogleCppIndent()
 let b:undo_indent = "setl sw< ts< sts< et< tw< wrap< cin< cino< inde<"
 "set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -114,10 +104,21 @@ set mat=2     " How many tenths of a second to blink
 set incsearch
 set ignorecase
 
+" 制表符
+set tabstop=4
+set expandtab
+"set smarttab
+" google style use 2 space for tab and retraction 
+set shiftwidth=4
+set softtabstop=4
 
 " 状态栏显示目前所执行的指令
 set showcmd 
 
+" 缩进
+set autoindent
+set smartindent
+set wrap
 
 "set vim screen width
 vertical res 800 
@@ -143,14 +144,8 @@ set completeopt=longest,menu
 " 代码折叠
 set foldmethod=marker
 
-"代码按= 或者: 进行排版对齐,或者直接在命令下输入 Tab /* 其中*就是对其的符号
-nmap <Leader>ta= :Tabularize /=<CR>
-vmap <Leader>ta= :Tabularize /=<CR>
-nmap <Leader>ta: :Tabularize /:\zs<CR>
-vmap <Leader>ta: :Tabularize /:\zs<CR>
-
 " 右下角显示列号
-set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%][%{ALEGetStatusLine()}]
+set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
 
 " =====================
 " 多语言环境
@@ -328,7 +323,7 @@ let Tlist_Auto_Open = 0
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
-nmap <Leader>tl :TlistToggle<CR>
+nmap tl :TlistToggle<CR>
 
 " Taglist
 set tags=tags;
@@ -337,19 +332,14 @@ map <C-F9> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
 "set list
 "set listchars=tab:>-,trail:-
 ""set ignorecase 
-
-" tagbar
-let g:tagbar_width = 30
-nmap <Leader>tb :TagbarToggle<CR>
-imap <Leader>tb <ESC> :TagbarToggle<CR>
+set noswapfile
 
 " 使用NERDTree插件查看工程文件。设置快捷键，速记：file list
 nmap <Leader>fl :NERDTreeToggle<CR>
-let NERDTreeAutoDeleteBuffer=1
 " 设置NERDTree子窗口宽度
-let NERDTreeWinSize=24
+let NERDTreeWinSize=18
 " 设置NERDTree子窗口位置
-let NERDTreeWinPos="left"
+let NERDTreeWinPos="right"
 " WinManager
 let g:NERDTree_title='[NERD Tree]'
 let g:AutoOpenWinManager= 1
@@ -385,7 +375,7 @@ let g:miniBufExplMoreThanOne=0
 " 键盘映射
 " =========
 " 定义快捷键的前缀，即<Leader>
-let mapleader=";"
+"let mapleader=";"
  
 " 定义快捷键 跳转到当前行的行首
 nmap lg 0
@@ -478,7 +468,7 @@ endif
 ":inoremap ] <c-r>=ClosePair(']')<CR>
 
 "nmap <silent> <F3> :Grep<CR>
-"nmap <silent> <F8> :A<CR>
+nmap <silent> <F8> :A<CR>
 nmap <silent> <F11> :cw<CR> 
 nmap <silent> <F10> :ccl<CR> 
 nmap <silent> <leader>n :noh<CR>
@@ -490,6 +480,9 @@ nmap K <C-u>
 
 " Netrw
 nmap <silent> <leader>fe :Sexplore!<CR> 
+
+" NERDTree
+nmap <silent> <leader>nt :NERDTreeToggle<cr>
 
 " Doxygen Toolkit
 map <F2>l :DoxLic<CR>
@@ -522,9 +515,11 @@ imap <silent> <F7> <Plug>MarkdownPreview
 nmap <silent> <F8> <Plug>StopMarkdownPreview
 imap <silent> <F8> <Plug>StopMarkdownPreview
 
-"高亮配对符
-"let g:mta_use_matchparen_group = 1
-"let g:mta_set_default_matchtag_color = 1
+
+"高亮配对符:XML/HTML tags 
+" let g:mta_use_matchparen_group = 1
+" let g:mta_set_default_matchtag_color = 1
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 新建文件设置
@@ -643,3 +638,4 @@ let g:rainbow_conf = {
             \       'stylus': 0,
             \   }
             \}
+
