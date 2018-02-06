@@ -1,0 +1,1 @@
+/data/chenyan/project/typhoon-blade-thrift/vim/indent/blade.vim
