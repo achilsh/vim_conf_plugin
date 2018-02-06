@@ -507,3 +507,133 @@ augroup end
 " Google code style
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
+
+" markdown 
+let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
+nmap <silent> <F7> <Plug>MarkdownPreview
+imap <silent> <F7> <Plug>MarkdownPreview
+nmap <silent> <F8> <Plug>StopMarkdownPreview
+imap <silent> <F8> <Plug>StopMarkdownPreview
+
+"高亮配对符:XML/HTML tags 
+" let g:mta_use_matchparen_group = 1
+" let g:mta_set_default_matchtag_color = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 新建文件设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufNewFile *.cpp,*.cc,*.c,*.hpp,*.h,*.sh,*.py exec ":call SetTitle()"
+func SetTitle()
+    if expand("%:e") == 'sh'
+        call setline(1,"\#!/bin/bash")
+        call append(line("."), "")
+    elseif expand("%:e") == 'py'
+        call setline(1,"#!/usr/bin/env python")
+        call append(line("."),"# coding=utf-8")
+        call append(line(".")+1, "")
+    elseif expand("%:e") == 'cpp'
+        call setline(1,"#include <iostream>")
+        call append(line("."), "")
+    elseif expand("%:e") == 'cc'
+        call setline(1,"#include <iostream>")
+        call append(line("."), "")
+    elseif expand("%:e") == 'c'
+        call setline(1,"#include <stdio.h>")
+        call append(line("."), "")
+    elseif expand("%:e") == 'h'
+        call setline(1, "#pragma once")
+    elseif expand("%:e") == 'hpp'
+        call setline(1, "#pragma once")
+    endif
+endfunc
+autocmd BufNewFile * normal G
+
+"
+"高亮类，成员函数，标准库和模板
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_concepts_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
+"文件较大时使用下面的设置高亮模板速度较快，但会有一些小错误
+"let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+
+"supertab
+let g:SuperTabRetainCompletionType=2
+
+"ale
+"始终开启标志列
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
+"自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+"在vim自带的状态栏中整合ale
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"文件内容发生变化时不进行检查
+let g:ale_lint_on_text_changed = 'never'
+"打开文件时不进行检查
+let g:ale_lint_on_enter = 0 
+
+" augroup YourGroup
+"   autocmd!
+"    autocmd User ALELint call YourFunction()
+" augroup END
+
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
+
+"
+"undotree
+nnoremap <F6> :UndotreeToggle<cr>
+set undodir=~/.undodir/
+set undofile
+
+"
+"TaskList
+"修改默认启动快捷键为<Leader>v
+nmap <Leader>v <Plug>TaskList
+"标签分类
+let g:tlTokenList = ["FIXME", "TODO", "HACK", "NOTE", "WARN", "MODIFY"]
+"默认在窗口上方打开任务列表，这里修改为下方
+let g:tlWindowPosition = 1
+"打开TaskList窗口，默认是<Leader>t，这里不做修改
+"nnoremap <Leader>t :TaskList<CR>
+"
+"rainbrow
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_operators=2
+let g:rainbow_conf = {
+            \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+            \   'ctermfgs': ['lightgray', 'lightblue', 'lightmagenta', 'lightcyan'],
+            \   'operators': '_,_',
+            \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+            \   'separately': {
+            \       '*': {},
+            \       'lisp': {
+            \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+            \           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+            \       },
+            \       'vim': {
+            \           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+            \       },
+            \       'tex': {
+            \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+            \       },
+            \       'css': 0,
+            \       'stylus': 0,
+            \   }
+            \}
+
