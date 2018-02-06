@@ -3,7 +3,6 @@ func! GetPWD()
     return substitute(getcwd(), "", "", "g")
 endf
 
-
 "function! GoogleCppIndent()
 "    let l:cline_num = line('.')
 "    let l:orig_indent = cindent(l:cline_num)
@@ -46,13 +45,6 @@ endf
 
 " line
 " set cursorline
-
-" 缩进
-set autoindent
-set smartindent
-set smarttab
-filetype indent on
-
 set hls
 " filetype plugin on
 set shiftwidth=4
@@ -60,11 +52,9 @@ set tabstop=4
 set softtabstop=4
 set noswapfile
 set expandtab
-set nowrap
+set wrap
 set cindent
-set cinoptions=g0,:0,N-s,(0
-
-"set cinoptions=h1,l1,g1,t0,i2,+2,(2,w1,W2
+set cinoptions=h1,l1,g1,t0,i2,+2,(2,w1,W2
 "set indentexpr=GoogleCppIndent()
 let b:undo_indent = "setl sw< ts< sts< et< tw< wrap< cin< cino< inde<"
 "set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -114,10 +104,21 @@ set mat=2     " How many tenths of a second to blink
 set incsearch
 set ignorecase
 
+" 制表符
+set tabstop=4
+set expandtab
+"set smarttab
+" google style use 2 space for tab and retraction 
+set shiftwidth=4
+set softtabstop=4
 
 " 状态栏显示目前所执行的指令
 set showcmd 
 
+" 缩进
+set autoindent
+set smartindent
+set wrap
 
 "set vim screen width
 vertical res 800 
@@ -143,14 +144,8 @@ set completeopt=longest,menu
 " 代码折叠
 set foldmethod=marker
 
-"代码按= 或者: 进行排版对齐,或者直接在命令下输入 Tab /* 其中*就是对其的符号
-nmap <Leader>ta= :Tabularize /=<CR>
-vmap <Leader>ta= :Tabularize /=<CR>
-nmap <Leader>ta: :Tabularize /:\zs<CR>
-vmap <Leader>ta: :Tabularize /:\zs<CR>
-
 " 右下角显示列号
-set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%][%{ALEGetStatusLine()}]
+set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
 
 " =====================
 " 多语言环境
@@ -328,7 +323,7 @@ let Tlist_Auto_Open = 0
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
-nmap <Leader>tl :TlistToggle<CR>
+nmap tl :TlistToggle<CR>
 
 " Taglist
 set tags=tags;
@@ -337,19 +332,14 @@ map <C-F9> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR>
 "set list
 "set listchars=tab:>-,trail:-
 ""set ignorecase 
-
-" tagbar
-let g:tagbar_width = 30
-nmap <Leader>tb :TagbarToggle<CR>
-imap <Leader>tb <ESC> :TagbarToggle<CR>
+set noswapfile
 
 " 使用NERDTree插件查看工程文件。设置快捷键，速记：file list
 nmap <Leader>fl :NERDTreeToggle<CR>
-let NERDTreeAutoDeleteBuffer=1
 " 设置NERDTree子窗口宽度
-let NERDTreeWinSize=24
+let NERDTreeWinSize=18
 " 设置NERDTree子窗口位置
-let NERDTreeWinPos="left"
+let NERDTreeWinPos="right"
 " WinManager
 let g:NERDTree_title='[NERD Tree]'
 let g:AutoOpenWinManager= 1
@@ -385,7 +375,7 @@ let g:miniBufExplMoreThanOne=0
 " 键盘映射
 " =========
 " 定义快捷键的前缀，即<Leader>
-let mapleader=";"
+"let mapleader=";"
  
 " 定义快捷键 跳转到当前行的行首
 nmap lg 0
@@ -478,7 +468,7 @@ endif
 ":inoremap ] <c-r>=ClosePair(']')<CR>
 
 "nmap <silent> <F3> :Grep<CR>
-"nmap <silent> <F8> :A<CR>
+nmap <silent> <F8> :A<CR>
 nmap <silent> <F11> :cw<CR> 
 nmap <silent> <F10> :ccl<CR> 
 nmap <silent> <leader>n :noh<CR>
@@ -490,6 +480,9 @@ nmap K <C-u>
 
 " Netrw
 nmap <silent> <leader>fe :Sexplore!<CR> 
+
+" NERDTree
+nmap <silent> <leader>nt :NERDTreeToggle<cr>
 
 " Doxygen Toolkit
 map <F2>l :DoxLic<CR>
@@ -514,132 +507,3 @@ augroup end
 " Google code style
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
-
-" markdown 
-let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
-nmap <silent> <F7> <Plug>MarkdownPreview
-imap <silent> <F7> <Plug>MarkdownPreview
-nmap <silent> <F8> <Plug>StopMarkdownPreview
-imap <silent> <F8> <Plug>StopMarkdownPreview
-
-"高亮配对符
-let g:mta_use_matchparen_group = 1
-let g:mta_set_default_matchtag_color = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 新建文件设置
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufNewFile *.cpp,*.cc,*.c,*.hpp,*.h,*.sh,*.py exec ":call SetTitle()"
-func SetTitle()
-    if expand("%:e") == 'sh'
-        call setline(1,"\#!/bin/bash")
-        call append(line("."), "")
-    elseif expand("%:e") == 'py'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
-        call append(line(".")+1, "")
-    elseif expand("%:e") == 'cpp'
-        call setline(1,"#include <iostream>")
-        call append(line("."), "")
-    elseif expand("%:e") == 'cc'
-        call setline(1,"#include <iostream>")
-        call append(line("."), "")
-    elseif expand("%:e") == 'c'
-        call setline(1,"#include <stdio.h>")
-        call append(line("."), "")
-    elseif expand("%:e") == 'h'
-        call setline(1, "#pragma once")
-    elseif expand("%:e") == 'hpp'
-        call setline(1, "#pragma once")
-    endif
-endfunc
-autocmd BufNewFile * normal G
-
-"
-"高亮类，成员函数，标准库和模板
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_concepts_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_experimental_simple_template_highlight = 1
-"文件较大时使用下面的设置高亮模板速度较快，但会有一些小错误
-"let g:cpp_experimental_template_highlight = 1
-let g:cpp_concepts_highlight = 1
-
-"supertab
-let g:SuperTabRetainCompletionType=2
-
-"ale
-"始终开启标志列
-let g:ale_sign_column_always = 1
-let g:ale_set_highlights = 0
-"自定义error和warning图标
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚡'
-"在vim自带的状态栏中整合ale
-let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
-"显示Linter名称,出错或警告等相关信息
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"文件内容发生变化时不进行检查
-let g:ale_lint_on_text_changed = 'never'
-"打开文件时不进行检查
-let g:ale_lint_on_enter = 0 
-
-" augroup YourGroup
-"   autocmd!
-"    autocmd User ALELint call YourFunction()
-" augroup END
-
-"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
-nmap sp <Plug>(ale_previous_wrap)
-nmap sn <Plug>(ale_next_wrap)
-
-"<Leader>s触发/关闭语法检查
-nmap <Leader>s :ALEToggle<CR>
-
-"<Leader>d查看错误或警告的详细信息
-nmap <Leader>d :ALEDetail<CR>
-
-"
-"undotree
-nnoremap <F6> :UndotreeToggle<cr>
-set undodir=~/.undodir/
-set undofile
-
-"
-"TaskList
-"修改默认启动快捷键为<Leader>v
-nmap <Leader>v <Plug>TaskList
-"标签分类
-let g:tlTokenList = ["FIXME", "TODO", "HACK", "NOTE", "WARN", "MODIFY"]
-"默认在窗口上方打开任务列表，这里修改为下方
-let g:tlWindowPosition = 1
-"打开TaskList窗口，默认是<Leader>t，这里不做修改
-"nnoremap <Leader>t :TaskList<CR>
-"
-"rainbrow
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-let g:rainbow_operators=2
-let g:rainbow_conf = {
-            \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-            \   'ctermfgs': ['lightgray', 'lightblue', 'lightmagenta', 'lightcyan'],
-            \   'operators': '_,_',
-            \   'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-            \   'separately': {
-            \       '*': {},
-            \       'lisp': {
-            \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-            \           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
-            \       },
-            \       'vim': {
-            \           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
-            \       },
-            \       'tex': {
-            \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
-            \       },
-            \       'css': 0,
-            \       'stylus': 0,
-            \   }
-            \}
