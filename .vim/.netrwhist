@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/data1/chenyan/stock_copy_master/hk_master_info'
-let g:netrw_dirhist_2='/data1/chenyan/project/forbag/ildata_proxy/buffer'
-let g:netrw_dirhist_3='/data1/chenyan/project/forbag/kchart_server'
-let g:netrw_dirhist_4='/data1/chenyan/project/stock_copy_master/stock_copy_master/follower_order_mgr_background_task'
-let g:netrw_dirhist_5='/data/chenyan/project/forbag/back_testing'
-let g:netrw_dirhist_6='/data/chenyan/stock_copy_master/cell_proxy_package/formax_social/cell_proxy/server/error_info'
